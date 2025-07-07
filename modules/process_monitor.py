@@ -17,6 +17,7 @@ class ProcessMonitor:
 
                 if pname not in self.baseline:
                     msg = f"Beklenmedik process: {pname} (PID {pid})"
+                    print(msg)
                     self.notifier.show_notification("Uyarı: Beklenmedik Process", msg)
 
             except (psutil.NoSuchProcess, psutil.AccessDenied, FileNotFoundError):

@@ -96,3 +96,8 @@ WindowsTerminal.exe
 opera.exe
 wlanext.exe
 AppHelperCap.exe
+Core Temp.exe
+BridgeCommunication.exe
+MoUsoCoreWorker.exe
+AppVShNotify.exe
+SysInfoCap.exe
