@@ -1,13 +1,13 @@
 # modules/process_monitor.py
 
 import psutil
-from modules.whitelist import load_baseline
+from modules.whitelist import load_whitelist
 from modules.identify_proc import get_file_hash
 
 class ProcessMonitor:
     def __init__(self, notifier):
         self.notifier = notifier
-        self.baseline = load_baseline()
+        self.whitelist = load_whitelist()
 
     def check_processes(self):
         for proc in psutil.process_iter(['pid', 'name', 'exe']): # Process bilgilerini al
@@ -20,11 +20,12 @@ class ProcessMonitor:
                 else:
                     phash = "N/A"
 
-                if pname not in self.baseline:
-                    print(f"***Beklenmedik process: {pname} (PID {pid})")
+                if (pname,phash) not in self.whitelist:
+                    print(f"***Unexpected Process: {pname} (PID {pid})")
                     print(f"PATH: {pexe}")
                     print(f"HASH: {phash}")
-                    self.notifier.show_notification("Uyarı: Beklenmedik Process", f"NAME {pname}\nPID {pid}")
+                    self.notifier.show_notification("Warning: Unexpected Process",
+                                                     f"NAME {pname}\nPID {pid}")
             except (psutil.NoSuchProcess):
                 print("NoSuchProcess")
                 continue

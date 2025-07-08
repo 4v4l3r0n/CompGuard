@@ -10,3 +10,4 @@ def get_file_hash(file_path):
         return h.hexdigest() #return the hash object in hexadecimal string format
     except (FileNotFoundError): #some processes may not have an executable file
         return None
+
